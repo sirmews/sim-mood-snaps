@@ -113,12 +113,12 @@ const SimsStats: React.FC = () => {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-4 mb-4">
             <div className="flex items-center gap-2">
-              <Sun className="w-4 h-4 text-sims-text" />
+              {/* <Sun className="w-4 h-4 text-sims-text" />
               <Switch 
                 checked={isDarkMode}
                 onCheckedChange={setIsDarkMode}
               />
-              <Moon className="w-4 h-4 text-sims-text" />
+              <Moon className="w-4 h-4 text-sims-text" /> */}
             </div>
           </div>
           <h1 className="text-3xl font-bold text-sims-text mb-2">{currentTitle}</h1>
@@ -166,6 +166,7 @@ const SimsStats: React.FC = () => {
           </Button>
         </div>
       </div>
+      <p>Made by <a href="https://www.perfectlycromulent.dev/">Nav</a></p>
     </div>
   );
 };
