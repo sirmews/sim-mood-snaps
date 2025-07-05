@@ -38,9 +38,13 @@
     --sims-green: 120 65% 45%;
     --sims-green-light: 120 65% 55%;
     --sims-green-dark: 120 65% 35%;
-    --sims-bg: 210 25% 88%;
-    --sims-panel: 0 0% 100%;
-    --sims-shadow: 220 15% 80%;
+    --sims-bg: 210 30% 85%;
+    --sims-panel: 210 45% 75%;
+    --sims-chrome: 210 50% 65%;
+    --sims-chrome-dark: 210 55% 55%;
+    --sims-stat-bg: 210 40% 80%;
+    --sims-stat-border: 210 50% 70%;
+    --sims-shadow: 210 30% 60%;
 
     --radius: 0.5rem;
 

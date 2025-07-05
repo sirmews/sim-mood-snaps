@@ -66,33 +66,38 @@ const StatBar: React.FC<StatBarProps> = ({
   }, [isDragging, onChange, label]);
 
   return (
-    <div className="bg-sims-panel rounded-lg p-4 shadow-md border border-sims-shadow/20">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-8 h-8 bg-sims-green/20 rounded-full flex items-center justify-center">
-          <Icon size={18} className="text-sims-green-dark" />
+    <div className="bg-sims-stat-bg rounded-lg border-2 border-sims-stat-border shadow-lg relative overflow-hidden">
+      {/* Chrome-like border effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-sims-chrome/30 to-sims-chrome-dark/20 pointer-events-none" />
+      
+      <div className="relative p-4">
+        <div className="flex items-center justify-between mb-3">
+          <span className="font-bold text-foreground text-sm tracking-wide">{label}</span>
+          <div className="w-6 h-6 bg-sims-chrome/40 rounded-full flex items-center justify-center border border-sims-chrome-dark/30">
+            <Icon size={14} className="text-sims-chrome-dark" />
+          </div>
         </div>
-        <span className="font-medium text-foreground text-sm">{label}</span>
-      </div>
-      
-      <div 
-        className="w-full h-6 bg-muted rounded-full relative cursor-pointer select-none"
-        data-stat={label}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-      >
+        
         <div 
-          className={`h-full bg-${color} rounded-full transition-all duration-150 ${isDragging ? 'bg-sims-green-light' : ''}`}
-          style={{ width: `${value}%` }}
-        />
-        <div 
-          className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white border-2 border-sims-green rounded-full shadow-sm cursor-grab active:cursor-grabbing"
-          style={{ left: `calc(${value}% - 8px)` }}
-        />
-      </div>
-      
-      <div className="text-xs text-muted-foreground mt-2 text-center">
-        {Math.round(value)}%
+          className="w-full h-5 bg-sims-chrome-dark/30 rounded-full relative cursor-pointer select-none border border-sims-chrome-dark/40 shadow-inner"
+          data-stat={label}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+        >
+          <div 
+            className={`h-full bg-gradient-to-r from-sims-green-light to-sims-green rounded-full transition-all duration-150 shadow-sm ${isDragging ? 'from-sims-green to-sims-green-dark' : ''}`}
+            style={{ width: `${value}%` }}
+          />
+          <div 
+            className="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-gradient-to-br from-white to-gray-200 border border-sims-chrome-dark/50 rounded-full shadow-md cursor-grab active:cursor-grabbing"
+            style={{ left: `calc(${value}% - 6px)` }}
+          />
+        </div>
+        
+        <div className="text-xs text-sims-chrome-dark font-medium mt-2 text-center">
+          {Math.round(value)}%
+        </div>
       </div>
     </div>
   );

@@ -69,6 +69,10 @@ export default {
 				},
 				'sims-bg': 'hsl(var(--sims-bg))',
 				'sims-panel': 'hsl(var(--sims-panel))',
+				'sims-chrome': 'hsl(var(--sims-chrome))',
+				'sims-chrome-dark': 'hsl(var(--sims-chrome-dark))',
+				'sims-stat-bg': 'hsl(var(--sims-stat-bg))',
+				'sims-stat-border': 'hsl(var(--sims-stat-border))',
 				'sims-shadow': 'hsl(var(--sims-shadow))'
 			},
 			borderRadius: {
