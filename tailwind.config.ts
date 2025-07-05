@@ -68,12 +68,18 @@ export default {
 					dark: 'hsl(var(--sims-green-dark))'
 				},
 				'sims-bg': 'hsl(var(--sims-bg))',
-				'sims-panel': 'hsl(var(--sims-panel))',
+				'sims-panel': {
+					DEFAULT: 'hsl(var(--sims-panel))',
+					light: 'hsl(var(--sims-panel-light))'
+				},
 				'sims-chrome': 'hsl(var(--sims-chrome))',
 				'sims-chrome-dark': 'hsl(var(--sims-chrome-dark))',
 				'sims-stat-bg': 'hsl(var(--sims-stat-bg))',
-				'sims-stat-border': 'hsl(var(--sims-stat-border))',
-				'sims-shadow': 'hsl(var(--sims-shadow))'
+				'sims-stat-light': 'hsl(var(--sims-stat-light))',
+				'sims-bar-bg': 'hsl(var(--sims-bar-bg))',
+				'sims-bar-border': 'hsl(var(--sims-bar-border))',
+				'sims-text': 'hsl(var(--sims-text))',
+				'sims-arrow': 'hsl(var(--sims-arrow))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

@@ -6,7 +6,9 @@ interface StatBarProps {
   value: number;
   onChange: (value: number) => void;
   icon: LucideIcon;
-  color?: string;
+  showLeftArrow?: boolean;
+  showRightArrow?: boolean;
+  showSmiley?: boolean;
 }
 
 const StatBar: React.FC<StatBarProps> = ({ 
@@ -14,7 +16,9 @@ const StatBar: React.FC<StatBarProps> = ({
   value, 
   onChange, 
   icon: Icon,
-  color = "sims-green"
+  showLeftArrow = false,
+  showRightArrow = false,
+  showSmiley = false
 }) => {
   const [isDragging, setIsDragging] = useState(false);
 
@@ -66,39 +70,43 @@ const StatBar: React.FC<StatBarProps> = ({
   }, [isDragging, onChange, label]);
 
   return (
-    <div className="bg-sims-stat-bg rounded-lg border-2 border-sims-stat-border shadow-lg relative overflow-hidden">
-      {/* Chrome-like border effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-sims-chrome/30 to-sims-chrome-dark/20 pointer-events-none" />
-      
-      <div className="relative p-4">
-        <div className="flex items-center justify-between mb-3">
-          <span className="font-bold text-foreground text-sm tracking-wide">{label}</span>
-          <div className="w-6 h-6 bg-sims-chrome/40 rounded-full flex items-center justify-center border border-sims-chrome-dark/30">
-            <Icon size={14} className="text-sims-chrome-dark" />
-          </div>
-        </div>
-        
+    <div className="bg-gradient-to-b from-sims-stat-light to-sims-stat-bg rounded-lg p-4 border-2 border-sims-panel shadow-inner relative">
+      <div className="text-sims-text font-bold text-lg mb-2">{label}</div>
+      <div className="relative">
         <div 
-          className="w-full h-5 bg-sims-chrome-dark/30 rounded-full relative cursor-pointer select-none border border-sims-chrome-dark/40 shadow-inner"
+          className="bg-sims-bar-bg rounded-full h-4 border border-sims-bar-border cursor-pointer"
           data-stat={label}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
         >
-          <div 
-            className={`h-full bg-gradient-to-r from-sims-green-light to-sims-green rounded-full transition-all duration-150 shadow-sm ${isDragging ? 'from-sims-green to-sims-green-dark' : ''}`}
+          <div
+            className={`bg-gradient-to-r from-sims-green-light to-sims-green h-full rounded-full border border-sims-green-dark transition-all duration-150 ${isDragging ? 'from-sims-green to-sims-green-dark' : ''}`}
             style={{ width: `${value}%` }}
-          />
-          <div 
-            className="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-gradient-to-br from-white to-gray-200 border border-sims-chrome-dark/50 rounded-full shadow-md cursor-grab active:cursor-grabbing"
-            style={{ left: `calc(${value}% - 6px)` }}
           />
         </div>
         
-        <div className="text-xs text-sims-chrome-dark font-medium mt-2 text-center">
-          {Math.round(value)}%
-        </div>
+        {/* Left pink arrow */}
+        {showLeftArrow && (
+          <div className="absolute -left-2 top-1/2 transform -translate-y-1/2">
+            <div className="w-0 h-0 border-l-4 border-l-sims-arrow border-t-2 border-t-transparent border-b-2 border-b-transparent"></div>
+          </div>
+        )}
+        
+        {/* Right green arrow */}
+        {showRightArrow && (
+          <div className="absolute -right-2 top-1/2 transform -translate-y-1/2">
+            <div className="w-0 h-0 border-r-4 border-r-sims-green border-t-2 border-t-transparent border-b-2 border-b-transparent"></div>
+          </div>
+        )}
       </div>
+      
+      {/* Smiley face icon for Fun */}
+      {showSmiley && value > 90 && (
+        <div className="absolute -right-2 -top-2 bg-sims-green-light rounded border-2 border-sims-green-dark p-1">
+          <div className="text-sims-green-dark text-xs font-bold">:)</div>
+        </div>
+      )}
     </div>
   );
 };

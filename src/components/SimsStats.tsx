@@ -2,40 +2,46 @@ import React, { useState } from 'react';
 import StatBar from './StatBar';
 import { Button } from '@/components/ui/button';
 import { 
-  Droplets, 
-  Gamepad2, 
-  UtensilsCrossed, 
+  Diamond, 
   Users, 
+  Briefcase, 
   Zap, 
-  Sparkles,
-  Camera,
-  Diamond,
-  UsersRound,
-  Utensils,
-  Palette,
-  Heart,
-  Star,
-  Trophy
+  Heart, 
+  Star, 
+  Package, 
+  User,
+  Camera
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 
 interface StatData {
   label: string;
   value: number;
-  icon: any;
+  showLeftArrow?: boolean;
+  showRightArrow?: boolean;
+  showSmiley?: boolean;
 }
 
 const SimsStats: React.FC = () => {
   const [stats, setStats] = useState<StatData[]>([
-    { label: 'Hunger', value: 85, icon: UtensilsCrossed },
-    { label: 'Social', value: 75, icon: Users },
-    { label: 'Bladder', value: 65, icon: Droplets },
-    { label: 'Hygiene', value: 90, icon: Sparkles },
-    { label: 'Energy', value: 45, icon: Zap },
-    { label: 'Fun', value: 80, icon: Gamepad2 },
+    { label: 'Hunger', value: 60, showLeftArrow: true },
+    { label: 'Social', value: 70, showLeftArrow: true },
+    { label: 'Bladder', value: 50 },
+    { label: 'Hygiene', value: 65, showLeftArrow: true },
+    { label: 'Energy', value: 45, showRightArrow: true },
+    { label: 'Fun', value: 95, showLeftArrow: true, showSmiley: true },
   ]);
 
-  const topIcons = [Diamond, UsersRound, Utensils, Palette, Heart, Star, Trophy];
+  const topIcons = [
+    { icon: Diamond, bg: "bg-sims-panel" },
+    { icon: Users, bg: "bg-sims-panel" },
+    { icon: Briefcase, bg: "bg-sims-panel" },
+    { icon: Zap, bg: "bg-sims-panel" },
+    { icon: Heart, bg: "bg-sims-panel" },
+    { icon: Star, bg: "bg-sims-panel" },
+    { icon: Package, bg: "bg-sims-panel" },
+    { icon: User, bg: "bg-sims-panel-light" },
+  ];
 
   const [isCapturing, setIsCapturing] = useState(false);
 
@@ -51,7 +57,7 @@ const SimsStats: React.FC = () => {
       const element = document.getElementById('sims-stats-container');
       if (element) {
         const canvas = await html2canvas(element, {
-          backgroundColor: '#a3b5c7',
+          backgroundColor: '#f1f5f9',
           scale: 2,
           useCORS: true,
         });
@@ -70,42 +76,37 @@ const SimsStats: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-sims-bg p-6">
-      <div className="max-w-4xl mx-auto">
+    <div className="flex items-center justify-center min-h-screen bg-sims-bg p-4">
+      <div className="relative">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-sims-chrome-dark mb-2">My Sims Stats</h1>
-          <p className="text-sims-chrome-dark/80">Drag the sliders to reflect your current mood!</p>
+          <h1 className="text-3xl font-bold text-sims-text mb-2">My Sims Stats</h1>
+          <p className="text-sims-text/80">Drag the bars to reflect your current mood!</p>
         </div>
 
         <div id="sims-stats-container" className="relative">
-          {/* Main chrome container */}
-          <div className="bg-gradient-to-br from-sims-chrome to-sims-chrome-dark rounded-3xl p-6 shadow-2xl border-4 border-sims-chrome-dark/50 relative overflow-hidden">
-            {/* Chrome effect overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/10 pointer-events-none" />
-            
+          {/* Main panel with 3D effect */}
+          <div className="bg-gradient-to-b from-sims-panel-light to-sims-panel rounded-2xl p-6 shadow-2xl border-4 border-sims-chrome-dark relative">
             {/* Top icon bar */}
-            <div className="flex justify-center mb-6 relative z-10">
-              <div className="flex gap-3 bg-sims-chrome-dark/30 rounded-2xl p-3 border-2 border-sims-chrome-dark/40">
-                {topIcons.map((Icon, index) => (
-                  <div 
-                    key={index}
-                    className="w-10 h-10 bg-sims-chrome/60 rounded-lg flex items-center justify-center border border-sims-chrome-dark/30 shadow-sm hover:bg-sims-chrome/80 transition-colors cursor-pointer"
-                  >
-                    <Icon size={18} className="text-sims-chrome-dark" />
-                  </div>
-                ))}
-              </div>
+            <div className="flex justify-center mb-6 gap-1">
+              {topIcons.map((item, index) => (
+                <div key={index} className={`${item.bg} rounded-lg p-2 border-2 border-sims-chrome-dark shadow-md cursor-pointer hover:brightness-110 transition-all`}>
+                  <item.icon className="w-5 h-5 text-sims-text" />
+                </div>
+              ))}
             </div>
 
-            {/* Stats grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
+            {/* Needs grid */}
+            <div className="grid grid-cols-2 gap-4">
               {stats.map((stat, index) => (
                 <StatBar
                   key={stat.label}
                   label={stat.label}
                   value={stat.value}
                   onChange={(value) => handleStatChange(index, value)}
-                  icon={stat.icon}
+                  icon={Diamond} // We'll keep using a placeholder icon since we removed icon from the interface
+                  showLeftArrow={stat.showLeftArrow}
+                  showRightArrow={stat.showRightArrow}
+                  showSmiley={stat.showSmiley}
                 />
               ))}
             </div>
@@ -116,7 +117,7 @@ const SimsStats: React.FC = () => {
           <Button 
             onClick={captureScreenshot}
             disabled={isCapturing}
-            className="bg-gradient-to-r from-sims-chrome to-sims-chrome-dark hover:from-sims-chrome-dark hover:to-sims-chrome text-white px-6 py-2 rounded-lg flex items-center gap-2 shadow-lg border border-sims-chrome-dark/50"
+            className="bg-gradient-to-r from-sims-panel-light to-sims-panel hover:from-sims-panel hover:to-sims-chrome-dark text-sims-text px-6 py-2 rounded-lg flex items-center gap-2 shadow-lg border-2 border-sims-chrome-dark"
           >
             <Camera size={18} />
             {isCapturing ? 'Capturing...' : 'Screenshot My Stats'}

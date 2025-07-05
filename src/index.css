@@ -34,17 +34,21 @@
     --input: 220 13% 87%;
     --ring: 220 15% 25%;
 
-    /* Sims-specific colors */
-    --sims-green: 120 65% 45%;
-    --sims-green-light: 120 65% 55%;
-    --sims-green-dark: 120 65% 35%;
-    --sims-bg: 210 30% 85%;
-    --sims-panel: 210 45% 75%;
-    --sims-chrome: 210 50% 65%;
-    --sims-chrome-dark: 210 55% 55%;
-    --sims-stat-bg: 210 40% 80%;
-    --sims-stat-border: 210 50% 70%;
-    --sims-shadow: 210 30% 60%;
+    /* Sims-specific colors - updated to match reference */
+    --sims-green: 110 50% 45%;
+    --sims-green-light: 110 50% 50%;
+    --sims-green-dark: 110 60% 40%;
+    --sims-bg: 220 16% 94%;
+    --sims-panel: 210 60% 50%;
+    --sims-panel-light: 210 50% 65%;
+    --sims-chrome: 210 60% 45%;
+    --sims-chrome-dark: 210 70% 35%;
+    --sims-stat-bg: 210 40% 70%;
+    --sims-stat-light: 210 40% 75%;
+    --sims-bar-bg: 210 60% 40%;
+    --sims-bar-border: 210 70% 30%;
+    --sims-text: 210 80% 15%;
+    --sims-arrow: 340 70% 50%;
 
     --radius: 0.5rem;
 
