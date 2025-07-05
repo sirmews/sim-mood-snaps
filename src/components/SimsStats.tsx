@@ -108,7 +108,7 @@ const SimsStats: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-sims-bg p-4">
+    <div className="flex items-center justify-center min-h-screen bg-sims-bg p-4 flex-col">
       <div className="relative">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-4 mb-4">
@@ -166,7 +166,7 @@ const SimsStats: React.FC = () => {
           </Button>
         </div>
       </div>
-      <p>Made by <a href="https://www.perfectlycromulent.dev/">Nav</a></p>
+      <p className="p-6">Made by <a href="https://www.perfectlycromulent.dev/">Nav</a></p>
     </div>
   );
 };
