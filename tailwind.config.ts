@@ -61,7 +61,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				'sims-green': {
+					DEFAULT: 'hsl(var(--sims-green))',
+					light: 'hsl(var(--sims-green-light))',
+					dark: 'hsl(var(--sims-green-dark))'
+				},
+				'sims-bg': 'hsl(var(--sims-bg))',
+				'sims-panel': 'hsl(var(--sims-panel))',
+				'sims-shadow': 'hsl(var(--sims-shadow))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
