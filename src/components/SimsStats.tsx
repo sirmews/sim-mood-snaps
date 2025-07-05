@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StatBar from './StatBar';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { 
   Diamond, 
   Users, 
@@ -10,7 +11,9 @@ import {
   Star, 
   Package, 
   User,
-  Camera
+  Camera,
+  Moon,
+  Sun
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 
@@ -23,6 +26,15 @@ interface StatData {
 }
 
 const SimsStats: React.FC = () => {
+  const simsAcronyms = [
+    "Stuck In My Saga",
+    "Status Is Mentally Slippery", 
+    "Socially Induced Meltdown Simulator",
+    "Sometimes It's Me Sulking",
+    "Stressed Individual Managing Struggles",
+    "Sadly I'm Making Scenes"
+  ];
+
   const [stats, setStats] = useState<StatData[]>([
     { label: 'Hunger', value: 60, showLeftArrow: true },
     { label: 'Social', value: 70, showLeftArrow: true },
@@ -31,6 +43,9 @@ const SimsStats: React.FC = () => {
     { label: 'Energy', value: 45, showRightArrow: true },
     { label: 'Fun', value: 95, showLeftArrow: true, showSmiley: true },
   ]);
+
+  const [currentTitle, setCurrentTitle] = useState(simsAcronyms[0]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const topIcons = [
     { icon: Diamond, bg: "bg-sims-panel" },
@@ -45,6 +60,19 @@ const SimsStats: React.FC = () => {
 
   const [isCapturing, setIsCapturing] = useState(false);
 
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * simsAcronyms.length);
+    setCurrentTitle(simsAcronyms[randomIndex]);
+  }, []);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
   const handleStatChange = (index: number, newValue: number) => {
     setStats(prev => prev.map((stat, i) => 
       i === index ? { ...stat, value: newValue } : stat
@@ -57,9 +85,13 @@ const SimsStats: React.FC = () => {
       const element = document.getElementById('sims-stats-container');
       if (element) {
         const canvas = await html2canvas(element, {
-          backgroundColor: '#f1f5f9',
+          backgroundColor: isDarkMode ? '#0f172a' : '#f1f5f9',
           scale: 2,
           useCORS: true,
+          x: -20,
+          y: -20,
+          width: element.offsetWidth + 40,
+          height: element.offsetHeight + 40,
         });
         
         // Create download link
@@ -79,7 +111,17 @@ const SimsStats: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-sims-bg p-4">
       <div className="relative">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-sims-text mb-2">My Sims Stats</h1>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <div className="flex items-center gap-2">
+              <Sun className="w-4 h-4 text-sims-text" />
+              <Switch 
+                checked={isDarkMode}
+                onCheckedChange={setIsDarkMode}
+              />
+              <Moon className="w-4 h-4 text-sims-text" />
+            </div>
+          </div>
+          <h1 className="text-3xl font-bold text-sims-text mb-2">{currentTitle}</h1>
           <p className="text-sims-text/80">Drag the bars to reflect your current mood!</p>
         </div>
 
