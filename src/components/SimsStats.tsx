@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StatBar from './StatBar';
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
 import { 
   Diamond, 
   Users, 
@@ -16,6 +15,7 @@ import {
   Sun
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
+import { useTheme } from 'next-themes';
 
 interface StatData {
   label: string;
@@ -45,7 +45,7 @@ const SimsStats: React.FC = () => {
   ]);
 
   const [currentTitle, setCurrentTitle] = useState(simsAcronyms[0]);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   const topIcons = [
     { icon: Diamond, bg: "bg-sims-panel" },
@@ -53,7 +53,11 @@ const SimsStats: React.FC = () => {
     { icon: Briefcase, bg: "bg-sims-panel" },
     { icon: Zap, bg: "bg-sims-panel" },
     { icon: Heart, bg: "bg-sims-panel" },
-    { icon: Star, bg: "bg-sims-panel" },
+    { 
+      icon: theme === 'dark' ? Sun : Moon, 
+      bg: "bg-sims-panel",
+      onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark')
+    },
     { icon: Package, bg: "bg-sims-panel" },
     { icon: User, bg: "bg-sims-panel-light" },
   ];
@@ -65,13 +69,6 @@ const SimsStats: React.FC = () => {
     setCurrentTitle(simsAcronyms[randomIndex]);
   }, []);
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
 
   const handleStatChange = (index: number, newValue: number) => {
     setStats(prev => prev.map((stat, i) => 
@@ -85,7 +82,7 @@ const SimsStats: React.FC = () => {
       const element = document.getElementById('sims-stats-container');
       if (element) {
         const canvas = await html2canvas(element, {
-          backgroundColor: isDarkMode ? '#0f172a' : '#f1f5f9',
+          backgroundColor: theme === 'dark' ? '#0f172a' : '#f1f5f9',
           scale: 2,
           useCORS: true,
           x: -20,
@@ -111,16 +108,6 @@ const SimsStats: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-sims-bg p-4 flex-col">
       <div className="relative">
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="flex items-center gap-2">
-              {/* <Sun className="w-4 h-4 text-sims-text" />
-              <Switch 
-                checked={isDarkMode}
-                onCheckedChange={setIsDarkMode}
-              />
-              <Moon className="w-4 h-4 text-sims-text" /> */}
-            </div>
-          </div>
           <h1 className="text-3xl font-bold text-sims-text mb-2">{currentTitle}</h1>
           <p className="text-sims-text/80">Drag the bars to reflect your current mood!</p>
         </div>
@@ -131,7 +118,11 @@ const SimsStats: React.FC = () => {
             {/* Top icon bar */}
             <div className="flex justify-center mb-6 gap-1">
               {topIcons.map((item, index) => (
-                <div key={index} className={`${item.bg} rounded-lg p-2 border-2 border-sims-chrome-dark shadow-md cursor-pointer hover:brightness-110 transition-all`}>
+                <div 
+                  key={index} 
+                  className={`${item.bg} rounded-lg p-2 border-2 border-sims-chrome-dark shadow-md cursor-pointer hover:brightness-110 transition-all`}
+                  onClick={item.onClick}
+                >
                   <item.icon className="w-5 h-5 text-sims-text" />
                 </div>
               ))}

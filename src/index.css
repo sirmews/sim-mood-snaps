@@ -70,13 +70,13 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 220 15% 8%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 220 15% 8%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 220 15% 8%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
@@ -97,6 +97,23 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
+    /* Dark mode Sims-specific colors */
+    --sims-green: 110 50% 45%;
+    --sims-green-light: 110 50% 50%;
+    --sims-green-dark: 110 60% 40%;
+    --sims-bg: 220 15% 8%;
+    --sims-panel: 210 40% 25%;
+    --sims-panel-light: 210 35% 35%;
+    --sims-chrome: 210 40% 20%;
+    --sims-chrome-dark: 210 50% 15%;
+    --sims-stat-bg: 210 30% 20%;
+    --sims-stat-light: 210 30% 25%;
+    --sims-bar-bg: 210 40% 15%;
+    --sims-bar-border: 210 50% 10%;
+    --sims-text: 210 40% 85%;
+    --sims-arrow: 340 70% 50%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
