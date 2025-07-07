@@ -26,14 +26,45 @@ interface StatData {
 }
 
 const SimsStats: React.FC = () => {
-  const simsAcronyms = [
-    "Stuck In My Saga",
-    "Status Is Mentally Slippery", 
-    "Socially Induced Meltdown Simulator",
-    "Sometimes It's Me Sulking",
-    "Stressed Individual Managing Struggles",
-    "Sadly I'm Making Scenes"
-  ];
+  // Mood-based SIMS acronyms
+  const simsAcronyms = {
+    critical: [
+      "Seriously In Major Shambles",
+      "Struggling In My Sadness",
+      "Stuck In Miserable State",
+      "Severely Impacted Mental State",
+      "Sinking In My Sorrows"
+    ],
+    low: [
+      "Stuck In My Saga",
+      "Status Is Mentally Slippery", 
+      "Socially Induced Meltdown Simulator",
+      "Sometimes It's Me Sulking",
+      "Stressed Individual Managing Struggles",
+      "Sadly I'm Making Scenes"
+    ],
+    medium: [
+      "Slowly Improving My Situation",
+      "Steadily In Moderate State",
+      "Somewhat In Middle Space",
+      "Still In Mixed Spirits",
+      "Surviving In My Story"
+    ],
+    good: [
+      "Succeeding In My Story",
+      "Smiling In My Success",
+      "Shining In My Spotlight",
+      "Strong In My Spirit",
+      "Soaring In My Satisfaction"
+    ],
+    excellent: [
+      "Spectacular In My Success",
+      "Supremely In My Stride",
+      "Superb In My Situation",
+      "Stellar In My State",
+      "Sensational In My Story"
+    ]
+  };
 
   const [stats, setStats] = useState<StatData[]>([
     { label: 'Hunger', value: 60, showLeftArrow: true },
@@ -44,7 +75,19 @@ const SimsStats: React.FC = () => {
     { label: 'Fun', value: 95, showLeftArrow: true, showSmiley: true },
   ]);
 
-  const [currentTitle, setCurrentTitle] = useState(simsAcronyms[0]);
+  // Calculate overall mood based on average of all stats
+  const calculateOverallMood = () => {
+    const average = stats.reduce((sum, stat) => sum + stat.value, 0) / stats.length;
+    
+    if (average <= 20) return 'critical';
+    if (average <= 40) return 'low';
+    if (average <= 60) return 'medium';
+    if (average <= 80) return 'good';
+    return 'excellent';
+  };
+
+  const [currentMood, setCurrentMood] = useState<string>('medium');
+  const [currentTitle, setCurrentTitle] = useState('');
   const { theme, setTheme } = useTheme();
 
   const topIcons = [
@@ -64,9 +107,24 @@ const SimsStats: React.FC = () => {
 
   const [isCapturing, setIsCapturing] = useState(false);
 
+  // Update title when stats change
+  React.useEffect(() => {
+    const newMood = calculateOverallMood();
+    if (newMood !== currentMood) {
+      setCurrentMood(newMood);
+      const moodTitles = simsAcronyms[newMood as keyof typeof simsAcronyms];
+      const randomIndex = Math.floor(Math.random() * moodTitles.length);
+      setCurrentTitle(moodTitles[randomIndex]);
+    }
+  }, [stats, currentMood]);
+
+  // Initialize title on component mount
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * simsAcronyms.length);
-    setCurrentTitle(simsAcronyms[randomIndex]);
+    const initialMood = calculateOverallMood();
+    setCurrentMood(initialMood);
+    const moodTitles = simsAcronyms[initialMood as keyof typeof simsAcronyms];
+    const randomIndex = Math.floor(Math.random() * moodTitles.length);
+    setCurrentTitle(moodTitles[randomIndex]);
   }, []);
 
 
