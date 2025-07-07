@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { useTheme } from 'next-themes';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface StatData {
   label: string;
@@ -120,22 +121,24 @@ const SimsStats: React.FC = () => {
   };
 
   const topIcons = [
-    { icon: Diamond, bg: "bg-sims-panel" },
-    { icon: Users, bg: "bg-sims-panel" },
-    { icon: Briefcase, bg: "bg-sims-panel" },
-    { icon: Zap, bg: "bg-sims-panel" },
-    { icon: Heart, bg: "bg-sims-panel" },
+    { icon: Diamond, bg: "bg-sims-panel", tooltip: "Aspirations & Goals" },
+    { icon: Users, bg: "bg-sims-panel", tooltip: "Social Relationships" },
+    { icon: Briefcase, bg: "bg-sims-panel", tooltip: "Career & Work" },
+    { icon: Zap, bg: "bg-sims-panel", tooltip: "Skills & Abilities" },
+    { icon: Heart, bg: "bg-sims-panel", tooltip: "Romance & Love" },
     { 
       icon: theme === 'dark' ? Sun : Moon, 
       bg: "bg-sims-panel",
-      onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark')
+      onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark'),
+      tooltip: theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'
     },
     { 
       icon: Camera, 
       bg: "bg-sims-panel",
-      onClick: captureScreenshot
+      onClick: captureScreenshot,
+      tooltip: 'Take Screenshot'
     },
-    { icon: User, bg: "bg-sims-panel-light" },
+    { icon: User, bg: "bg-sims-panel-light", tooltip: "Sim Profile" },
   ];
 
   // Update title when stats change
@@ -179,7 +182,21 @@ const SimsStats: React.FC = () => {
             {/* Top icon bar */}
             <div className="flex justify-center mb-6 gap-1">
               {topIcons.map((item, index) => (
-                <div 
+                <Tooltip key={index}>
+                  <TooltipTrigger asChild>
+                    <div 
+                      className={`${item.bg} rounded-lg p-2 border-2 border-sims-chrome-dark shadow-md cursor-pointer hover:brightness-110 transition-all ${item.onClick && isCapturing ? 'opacity-50' : ''}`}
+                      onClick={item.onClick}
+                    >
+                      <item.icon className="w-5 h-5 text-sims-text" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{item.tooltip}</p>
+                  </TooltipContent>
+                </Tooltip>
+              ))}
+            </div>
                   key={index} 
                   className={`${item.bg} rounded-lg p-2 border-2 border-sims-chrome-dark shadow-md cursor-pointer hover:brightness-110 transition-all ${item.onClick && isCapturing ? 'opacity-50' : ''}`}
                   onClick={item.onClick}
