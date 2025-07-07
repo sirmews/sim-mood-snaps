@@ -197,14 +197,6 @@ const SimsStats: React.FC = () => {
                 </Tooltip>
               ))}
             </div>
-                  key={index} 
-                  className={`${item.bg} rounded-lg p-2 border-2 border-sims-chrome-dark shadow-md cursor-pointer hover:brightness-110 transition-all ${item.onClick && isCapturing ? 'opacity-50' : ''}`}
-                  onClick={item.onClick}
-                >
-                  <item.icon className="w-5 h-5 text-sims-text" />
-                </div>
-              ))}
-            </div>
 
             {/* Needs grid */}
             <div className="grid grid-cols-2 gap-4">
