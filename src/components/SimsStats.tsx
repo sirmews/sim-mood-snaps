@@ -12,7 +12,8 @@ import {
   User,
   Camera,
   Moon,
-  Sun
+  Sun,
+  Laptop
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { useTheme } from 'next-themes';
@@ -137,6 +138,12 @@ const SimsStats: React.FC = () => {
       bg: "bg-sims-panel",
       onClick: captureScreenshot,
       tooltip: 'Take Screenshot'
+    },
+    { 
+      icon: Laptop, 
+      bg: "bg-sims-panel",
+      onClick: () => window.open('https://github.com/GPT-Engineer-App/sims-mood-tracker', '_blank'),
+      tooltip: 'View on GitHub'
     },
     { icon: User, bg: "bg-sims-panel-light", tooltip: "Sim Profile" },
   ];
