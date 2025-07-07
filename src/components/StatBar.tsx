@@ -22,6 +22,44 @@ const StatBar: React.FC<StatBarProps> = ({
 }) => {
   const [isDragging, setIsDragging] = useState(false);
 
+  // Calculate color based on value (red for low, yellow for medium, green for high)
+  const getBarColor = (value: number) => {
+    if (value <= 25) {
+      // Red to orange (0-25%)
+      const intensity = value / 25;
+      return {
+        from: `hsl(${Math.round(intensity * 15)}, 85%, 50%)`, // 0° (red) to 15° (red-orange)
+        to: `hsl(${Math.round(intensity * 20)}, 85%, 45%)`,
+        border: `hsl(${Math.round(intensity * 20)}, 85%, 35%)`
+      };
+    } else if (value <= 50) {
+      // Orange to yellow (25-50%)
+      const intensity = (value - 25) / 25;
+      return {
+        from: `hsl(${Math.round(15 + intensity * 30)}, 85%, 50%)`, // 15° to 45° (orange to yellow)
+        to: `hsl(${Math.round(20 + intensity * 35)}, 85%, 45%)`,
+        border: `hsl(${Math.round(20 + intensity * 35)}, 85%, 35%)`
+      };
+    } else if (value <= 75) {
+      // Yellow to yellow-green (50-75%)
+      const intensity = (value - 50) / 25;
+      return {
+        from: `hsl(${Math.round(45 + intensity * 35)}, 75%, 50%)`, // 45° to 80° (yellow to yellow-green)
+        to: `hsl(${Math.round(55 + intensity * 35)}, 75%, 45%)`,
+        border: `hsl(${Math.round(55 + intensity * 35)}, 75%, 35%)`
+      };
+    } else {
+      // Yellow-green to green (75-100%)
+      const intensity = (value - 75) / 25;
+      return {
+        from: `hsl(${Math.round(80 + intensity * 30)}, 70%, 50%)`, // 80° to 110° (yellow-green to green)
+        to: `hsl(${Math.round(90 + intensity * 20)}, 70%, 45%)`,
+        border: `hsl(${Math.round(90 + intensity * 20)}, 70%, 35%)`
+      };
+    }
+  };
+
+  const barColors = getBarColor(value);
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     updateValue(e);
@@ -81,7 +119,11 @@ const StatBar: React.FC<StatBarProps> = ({
           onMouseUp={handleMouseUp}
         >
           <div
-            className={`bg-gradient-to-r from-sims-green-light to-sims-green h-full rounded-full border border-sims-green-dark transition-all duration-150 ${isDragging ? 'from-sims-green to-sims-green-dark' : ''}`}
+              width: `${value}%`,
+              background: `linear-gradient(to right, ${barColors.from}, ${barColors.to})`,
+              borderColor: barColors.border,
+              borderWidth: '1px',
+              borderStyle: 'solid'
             style={{ width: `${value}%` }}
           />
         </div>
