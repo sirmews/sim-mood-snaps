@@ -101,7 +101,11 @@ const SimsStats: React.FC = () => {
       bg: "bg-sims-panel",
       onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark')
     },
-    { icon: Package, bg: "bg-sims-panel" },
+    { 
+      icon: Camera, 
+      bg: "bg-sims-panel",
+      onClick: captureScreenshot
+    },
     { icon: User, bg: "bg-sims-panel-light" },
   ];
 
@@ -178,7 +182,7 @@ const SimsStats: React.FC = () => {
               {topIcons.map((item, index) => (
                 <div 
                   key={index} 
-                  className={`${item.bg} rounded-lg p-2 border-2 border-sims-chrome-dark shadow-md cursor-pointer hover:brightness-110 transition-all`}
+                  className={`${item.bg} rounded-lg p-2 border-2 border-sims-chrome-dark shadow-md cursor-pointer hover:brightness-110 transition-all ${item.onClick && isCapturing ? 'opacity-50' : ''}`}
                   onClick={item.onClick}
                 >
                   <item.icon className="w-5 h-5 text-sims-text" />
@@ -204,16 +208,6 @@ const SimsStats: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex justify-center mt-8">
-          <Button 
-            onClick={captureScreenshot}
-            disabled={isCapturing}
-            className="bg-gradient-to-r from-sims-panel-light to-sims-panel hover:from-sims-panel hover:to-sims-chrome-dark text-sims-text px-6 py-2 rounded-lg flex items-center gap-2 shadow-lg border-2 border-sims-chrome-dark"
-          >
-            <Camera size={18} />
-            {isCapturing ? 'Capturing...' : 'Screenshot My Stats'}
-          </Button>
-        </div>
       </div>
       <p className="p-6">Made by <a href="https://www.perfectlycromulent.dev/">Nav</a></p>
     </div>
