@@ -134,8 +134,11 @@ const SimsStats: React.FC = () => {
     return words.map((word, index) => (
       <span key={index} className="inline-block">
         <span className="relative">
-          <span className="bg-gradient-to-b from-sims-panel-light to-sims-panel text-sims-chrome-dark px-1.5 py-0.5 rounded-md border-2 border-sims-chrome-dark shadow-md font-bold text-lg mr-1">
+          <span className="bg-gradient-to-b from-sims-green-light to-sims-green-dark text-white px-1.5 py-0.5 rounded-md border-2 border-sims-green-dark shadow-lg font-bold text-lg mr-1 relative overflow-hidden">
+            <span className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent pointer-events-none"></span>
+            <span className="relative z-10">
             {word.charAt(0)}
+            </span>
           </span>
           <span className="text-sims-text">
             {word.slice(1)}
