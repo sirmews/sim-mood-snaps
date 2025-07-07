@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 220 15% 95%;
+    --background: 210 20% 98%;
     --foreground: 220 15% 15%;
 
     --card: 0 0% 100%;
@@ -38,7 +38,7 @@
     --sims-green: 110 50% 45%;
     --sims-green-light: 110 50% 50%;
     --sims-green-dark: 110 60% 40%;
-    --sims-bg: 220 16% 94%;
+    --sims-bg: 210 25% 96%;
     --sims-panel: 210 60% 50%;
     --sims-panel-light: 210 50% 65%;
     --sims-chrome: 210 60% 45%;
