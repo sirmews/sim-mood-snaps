@@ -119,12 +119,14 @@ const StatBar: React.FC<StatBarProps> = ({
           onMouseUp={handleMouseUp}
         >
           <div
+            className="h-full rounded-full transition-all duration-200"
+            style={{ 
               width: `${value}%`,
               background: `linear-gradient(to right, ${barColors.from}, ${barColors.to})`,
               borderColor: barColors.border,
               borderWidth: '1px',
               borderStyle: 'solid'
-            style={{ width: `${value}%` }}
+            }}
           />
         </div>
         
