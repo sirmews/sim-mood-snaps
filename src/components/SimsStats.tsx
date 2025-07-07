@@ -126,7 +126,6 @@ const SimsStats: React.FC = () => {
     { icon: Users, bg: "bg-sims-panel", tooltip: "Social Relationships" },
     { icon: Briefcase, bg: "bg-sims-panel", tooltip: "Career & Work" },
     { icon: Zap, bg: "bg-sims-panel", tooltip: "Skills & Abilities" },
-    { icon: Heart, bg: "bg-sims-panel", tooltip: "Romance & Love" },
     { 
       icon: theme === 'dark' ? Sun : Moon, 
       bg: "bg-sims-panel",
