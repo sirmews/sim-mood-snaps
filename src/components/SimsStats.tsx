@@ -133,23 +133,17 @@ const SimsStats: React.FC = () => {
     const words = title.split(' ');
     return words.map((word, index) => (
       <span key={index} className="inline-block">
-        <span className="relative">
-          <span 
-            className="font-bold text-lg mr-1 relative"
-            style={{
-              background: 'linear-gradient(to bottom, hsl(var(--sims-green-light)), hsl(var(--sims-green-dark)))',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-              filter: 'drop-shadow(1px 1px 2px rgba(255,255,255,0.3))'
-            }}
-          >
-            {word.charAt(0)}
-          </span>
-          <span className="text-sims-text">
-            {word.slice(1)}
-          </span>
+        <span 
+          className="inline-block px-2 py-1 rounded-md mr-1 font-bold text-sims-text shadow-md border border-sims-chrome-dark"
+          style={{
+            background: 'linear-gradient(135deg, hsl(var(--sims-green-light)), hsl(var(--sims-green-dark)))',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.2)'
+          }}
+        >
+          {word.charAt(0)}
+        </span>
+        <span className="text-sims-text">
+          {word.slice(1)}
         </span>
         {index < words.length - 1 && <span className="mr-2"></span>}
       </span>
