@@ -89,54 +89,7 @@ const SimsStats: React.FC = () => {
   const [currentMood, setCurrentMood] = useState<string>('medium');
   const [currentTitle, setCurrentTitle] = useState('');
   const { theme, setTheme } = useTheme();
-
-  const topIcons = [
-    { icon: Diamond, bg: "bg-sims-panel" },
-    { icon: Users, bg: "bg-sims-panel" },
-    { icon: Briefcase, bg: "bg-sims-panel" },
-    { icon: Zap, bg: "bg-sims-panel" },
-    { icon: Heart, bg: "bg-sims-panel" },
-    { 
-      icon: theme === 'dark' ? Sun : Moon, 
-      bg: "bg-sims-panel",
-      onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark')
-    },
-    { 
-      icon: Camera, 
-      bg: "bg-sims-panel",
-      onClick: captureScreenshot
-    },
-    { icon: User, bg: "bg-sims-panel-light" },
-  ];
-
   const [isCapturing, setIsCapturing] = useState(false);
-
-  // Update title when stats change
-  React.useEffect(() => {
-    const newMood = calculateOverallMood();
-    if (newMood !== currentMood) {
-      setCurrentMood(newMood);
-      const moodTitles = simsAcronyms[newMood as keyof typeof simsAcronyms];
-      const randomIndex = Math.floor(Math.random() * moodTitles.length);
-      setCurrentTitle(moodTitles[randomIndex]);
-    }
-  }, [stats, currentMood]);
-
-  // Initialize title on component mount
-  useEffect(() => {
-    const initialMood = calculateOverallMood();
-    setCurrentMood(initialMood);
-    const moodTitles = simsAcronyms[initialMood as keyof typeof simsAcronyms];
-    const randomIndex = Math.floor(Math.random() * moodTitles.length);
-    setCurrentTitle(moodTitles[randomIndex]);
-  }, []);
-
-
-  const handleStatChange = (index: number, newValue: number) => {
-    setStats(prev => prev.map((stat, i) => 
-      i === index ? { ...stat, value: newValue } : stat
-    ));
-  };
 
   const captureScreenshot = async () => {
     setIsCapturing(true);
@@ -164,6 +117,52 @@ const SimsStats: React.FC = () => {
     } finally {
       setIsCapturing(false);
     }
+  };
+
+  const topIcons = [
+    { icon: Diamond, bg: "bg-sims-panel" },
+    { icon: Users, bg: "bg-sims-panel" },
+    { icon: Briefcase, bg: "bg-sims-panel" },
+    { icon: Zap, bg: "bg-sims-panel" },
+    { icon: Heart, bg: "bg-sims-panel" },
+    { 
+      icon: theme === 'dark' ? Sun : Moon, 
+      bg: "bg-sims-panel",
+      onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark')
+    },
+    { 
+      icon: Camera, 
+      bg: "bg-sims-panel",
+      onClick: captureScreenshot
+    },
+    { icon: User, bg: "bg-sims-panel-light" },
+  ];
+
+  // Update title when stats change
+  React.useEffect(() => {
+    const newMood = calculateOverallMood();
+    if (newMood !== currentMood) {
+      setCurrentMood(newMood);
+      const moodTitles = simsAcronyms[newMood as keyof typeof simsAcronyms];
+      const randomIndex = Math.floor(Math.random() * moodTitles.length);
+      setCurrentTitle(moodTitles[randomIndex]);
+    }
+  }, [stats, currentMood]);
+
+  // Initialize title on component mount
+  useEffect(() => {
+    const initialMood = calculateOverallMood();
+    setCurrentMood(initialMood);
+    const moodTitles = simsAcronyms[initialMood as keyof typeof simsAcronyms];
+    const randomIndex = Math.floor(Math.random() * moodTitles.length);
+    setCurrentTitle(moodTitles[randomIndex]);
+  }, []);
+
+
+  const handleStatChange = (index: number, newValue: number) => {
+    setStats(prev => prev.map((stat, i) => 
+      i === index ? { ...stat, value: newValue } : stat
+    ));
   };
 
   return (
