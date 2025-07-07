@@ -166,7 +166,7 @@ const SimsStats: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-sims-bg p-4 flex-col">
       <div className="relative">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-sims-text mb-2">{currentTitle}</h1>
+          <h1 className="text-3xl font-bold text-sims-text mb-2 w-96 mx-auto">{currentTitle}</h1>
           <p className="text-sims-text/80">Drag the bars to reflect your current mood!</p>
         </div>
 
