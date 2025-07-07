@@ -128,6 +128,24 @@ const SimsStats: React.FC = () => {
   }, []);
 
 
+  // Function to render title with highlighted first letters
+  const renderHighlightedTitle = (title: string) => {
+    const words = title.split(' ');
+    return words.map((word, index) => (
+      <span key={index} className="inline-block">
+        <span className="relative">
+          <span className="bg-gradient-to-b from-sims-panel-light to-sims-panel text-sims-chrome-dark px-1.5 py-0.5 rounded-md border-2 border-sims-chrome-dark shadow-md font-bold text-lg mr-1">
+            {word.charAt(0)}
+          </span>
+          <span className="text-sims-text">
+            {word.slice(1)}
+          </span>
+        </span>
+        {index < words.length - 1 && <span className="mr-2"></span>}
+      </span>
+    ));
+  };
+
   const handleStatChange = (index: number, newValue: number) => {
     setStats(prev => prev.map((stat, i) => 
       i === index ? { ...stat, value: newValue } : stat
@@ -166,7 +184,9 @@ const SimsStats: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-sims-bg p-4 flex-col">
       <div className="relative">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-sims-text mb-2 w-[32rem] mx-auto">{currentTitle}</h1>
+          <h1 className="text-3xl font-bold mb-2 w-[32rem] mx-auto flex flex-wrap justify-center items-center leading-relaxed">
+            {renderHighlightedTitle(currentTitle)}
+          </h1>
           <p className="text-sims-text/80">Drag the bars to reflect your current mood!</p>
         </div>
 
