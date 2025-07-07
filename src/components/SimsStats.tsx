@@ -217,16 +217,8 @@ const SimsStats: React.FC = () => {
         </div>
 
       </div>
-      <p className="p-6 text-center bg-gradient-to-r from-sims-panel to-sims-panel-light rounded-xl border-2 border-sims-chrome-dark shadow-lg mx-4 mt-8">
-        <span className="text-sims-text font-bold text-lg block mb-2">🎮 Crafted in SimCity 🎮</span>
-        <span className="text-sims-text/80 text-sm">Made with ❤️ by </span>
-        <a 
-          href="https://www.perfectlycromulent.dev/" 
-          className="text-sims-green font-bold hover:text-sims-green-light transition-colors duration-200 underline decoration-2 underline-offset-2"
-        >
-          Nav
-        </a>
-        <span className="text-sims-text/60 text-xs block mt-2">✨ Your digital life simulator ✨</span>
+      <p className="p-6 text-center text-sims-text/70 text-sm">
+        vibe coded ✨ by <a href="https://www.perfectlycromulent.dev/" className="text-sims-green hover:text-sims-green-light transition-colors">Nav</a>
       </p>
     </div>
   );
