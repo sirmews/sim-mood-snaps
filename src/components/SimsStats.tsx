@@ -215,26 +215,26 @@ const SimsStats: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-sims-bg p-4 flex-col">
+    <div className="flex items-center justify-center min-h-screen bg-sims-bg p-4 sm:p-6 md:p-8 flex-col">
       <div className="relative">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-sims-text mb-2">{currentTitle}</h1>
-          <p className="text-sims-text/80">Drag the bars to reflect your current mood!</p>
+          <p className="text-sims-text/80 px-4 sm:px-0">Drag the bars to reflect your current mood!</p>
         </div>
 
         <div id="sims-stats-container" className="relative">
           {/* Main panel with 3D effect */}
-          <div className="bg-gradient-to-b from-sims-panel-light to-sims-panel rounded-2xl p-6 shadow-2xl border-4 border-sims-chrome-dark relative">
+          <div className="bg-gradient-to-b from-sims-panel-light to-sims-panel rounded-2xl p-4 sm:p-6 shadow-2xl border-4 border-sims-chrome-dark relative max-w-md sm:max-w-lg mx-auto">
             {/* Top icon bar */}
-            <div className="flex justify-center mb-6 gap-1">
+            <div className="flex justify-center mb-4 sm:mb-6 gap-1 flex-wrap">
               {topIcons.map((item, index) => (
                 <Tooltip key={index}>
                   <TooltipTrigger asChild>
                     <div 
-                      className={`${item.bg} rounded-lg p-2 border-2 border-sims-chrome-dark shadow-md cursor-pointer hover:brightness-110 transition-all ${item.onClick && isCapturing ? 'opacity-50' : ''}`}
+                      className={`${item.bg} rounded-lg p-1.5 sm:p-2 border-2 border-sims-chrome-dark shadow-md cursor-pointer hover:brightness-110 transition-all ${item.onClick && isCapturing ? 'opacity-50' : ''}`}
                       onClick={item.onClick}
                     >
-                      <item.icon className="w-5 h-5 text-sims-text" />
+                      <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-sims-text" />
                     </div>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -245,7 +245,7 @@ const SimsStats: React.FC = () => {
             </div>
 
             {/* Needs grid */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {stats.map((stat, index) => (
                 <StatBar
                   key={stat.label}
@@ -263,7 +263,7 @@ const SimsStats: React.FC = () => {
         </div>
 
       </div>
-      <p className="p-6 text-center text-sims-text/70 text-sm">
+      <p className="p-4 sm:p-6 text-center text-sims-text/70 text-sm">
         vibe coded 🌸 by <a href="https://www.perfectlycromulent.dev/" className="text-sims-green hover:text-sims-green-light transition-colors">Nav</a>
       </p>
     </div>

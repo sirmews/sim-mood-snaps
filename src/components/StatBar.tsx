@@ -108,11 +108,11 @@ const StatBar: React.FC<StatBarProps> = ({
   }, [isDragging, onChange, label]);
 
   return (
-    <div className="bg-gradient-to-b from-sims-stat-light to-sims-stat-bg rounded-lg p-4 border-2 border-sims-panel shadow-inner relative">
-      <div className="text-sims-text font-bold text-lg mb-2">{label}</div>
+    <div className="bg-gradient-to-b from-sims-stat-light to-sims-stat-bg rounded-lg p-3 sm:p-4 border-2 border-sims-panel shadow-inner relative">
+      <div className="text-sims-text font-bold text-base sm:text-lg mb-2">{label}</div>
       <div className="relative">
         <div 
-          className="bg-sims-bar-bg rounded-full h-4 border border-sims-bar-border cursor-pointer"
+          className="bg-sims-bar-bg rounded-full h-3 sm:h-4 border border-sims-bar-border cursor-pointer"
           data-stat={label}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -132,14 +132,14 @@ const StatBar: React.FC<StatBarProps> = ({
         
         {/* Left pink arrow */}
         {showLeftArrow && (
-          <div className="absolute -left-2 top-1/2 transform -translate-y-1/2">
+          <div className="absolute -left-1.5 sm:-left-2 top-1/2 transform -translate-y-1/2">
             <div className="w-0 h-0 border-l-4 border-l-sims-arrow border-t-2 border-t-transparent border-b-2 border-b-transparent"></div>
           </div>
         )}
         
         {/* Right green arrow */}
         {showRightArrow && (
-          <div className="absolute -right-2 top-1/2 transform -translate-y-1/2">
+          <div className="absolute -right-1.5 sm:-right-2 top-1/2 transform -translate-y-1/2">
             <div className="w-0 h-0 border-r-4 border-r-sims-green border-t-2 border-t-transparent border-b-2 border-b-transparent"></div>
           </div>
         )}
@@ -147,7 +147,7 @@ const StatBar: React.FC<StatBarProps> = ({
       
       {/* Smiley face icon for Fun */}
       {showSmiley && value > 90 && (
-        <div className="absolute -right-2 -top-2 bg-sims-green-light rounded border-2 border-sims-green-dark p-1">
+        <div className="absolute -right-1.5 sm:-right-2 -top-1.5 sm:-top-2 bg-sims-green-light rounded border-2 border-sims-green-dark p-0.5 sm:p-1">
           <div className="text-sims-green-dark text-xs font-bold">:)</div>
         </div>
       )}
