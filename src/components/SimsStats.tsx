@@ -68,14 +68,43 @@ const SimsStats: React.FC = () => {
     ]
   };
 
-  const [stats, setStats] = useState<StatData[]>([
-    { label: 'Hunger', value: 60, showLeftArrow: true },
-    { label: 'Social', value: 70, showLeftArrow: true },
-    { label: 'Bladder', value: 50 },
-    { label: 'Hygiene', value: 65, showLeftArrow: true },
-    { label: 'Energy', value: 45, showRightArrow: true },
-    { label: 'Fun', value: 95, showLeftArrow: true, showSmiley: true },
-  ]);
+  // Function to get URL parameters
+  const getUrlParams = () => {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      hunger: parseInt(params.get('hunger') || '60'),
+      social: parseInt(params.get('social') || '70'),
+      bladder: parseInt(params.get('bladder') || '50'),
+      hygiene: parseInt(params.get('hygiene') || '65'),
+      energy: parseInt(params.get('energy') || '45'),
+      fun: parseInt(params.get('fun') || '95')
+    };
+  };
+
+  // Function to update URL with current stats
+  const updateUrl = (newStats: StatData[]) => {
+    const params = new URLSearchParams();
+    newStats.forEach(stat => {
+      params.set(stat.label.toLowerCase(), Math.round(stat.value).toString());
+    });
+    
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, '', newUrl);
+  };
+
+  // Initialize stats from URL parameters
+  const initializeStats = (): StatData[] => {
+    const urlParams = getUrlParams();
+    return [
+      { label: 'Hunger', value: urlParams.hunger, showLeftArrow: true },
+      { label: 'Social', value: urlParams.social, showLeftArrow: true },
+      { label: 'Bladder', value: urlParams.bladder },
+      { label: 'Hygiene', value: urlParams.hygiene, showLeftArrow: true },
+      { label: 'Energy', value: urlParams.energy, showRightArrow: true },
+      { label: 'Fun', value: urlParams.fun, showLeftArrow: true, showSmiley: true },
+    ];
+  };
+  const [stats, setStats] = useState<StatData[]>(initializeStats);
 
   // Calculate overall mood based on average of all stats
   const calculateOverallMood = () => {
@@ -93,6 +122,15 @@ const SimsStats: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const [isCapturing, setIsCapturing] = useState(false);
 
+  // Listen for browser back/forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      setStats(initializeStats());
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
   const captureScreenshot = async () => {
     setIsCapturing(true);
     try {
@@ -169,9 +207,11 @@ const SimsStats: React.FC = () => {
 
 
   const handleStatChange = (index: number, newValue: number) => {
-    setStats(prev => prev.map((stat, i) => 
+    const newStats = stats.map((stat, i) => 
       i === index ? { ...stat, value: newValue } : stat
-    ));
+    );
+    setStats(newStats);
+    updateUrl(newStats);
   };
 
   return (
