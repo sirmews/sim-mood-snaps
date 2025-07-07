@@ -218,7 +218,7 @@ const SimsStats: React.FC = () => {
 
       </div>
       <p className="p-6 text-center text-sims-text/70 text-sm">
-        vibe coded ✨ by <a href="https://www.perfectlycromulent.dev/" className="text-sims-green hover:text-sims-green-light transition-colors">Nav</a>
+        vibe coded 🌸 by <a href="https://www.perfectlycromulent.dev/" className="text-sims-green hover:text-sims-green-light transition-colors">Nav</a>
       </p>
     </div>
   );
