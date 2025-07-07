@@ -141,7 +141,7 @@ const SimsStats: React.FC = () => {
     { 
       icon: Laptop, 
       bg: "bg-sims-panel",
-      onClick: () => window.open('https://github.com/GPT-Engineer-App/sims-mood-tracker', '_blank'),
+      onClick: () => window.open('https://github.com/sirmews/sim-mood-snaps', '_blank'),
       tooltip: 'View on GitHub'
     },
     { icon: User, bg: "bg-sims-panel-light", tooltip: "Sim Profile" },
