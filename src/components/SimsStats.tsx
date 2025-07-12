@@ -13,7 +13,10 @@ import {
   Camera,
   Moon,
   Sun,
-  Laptop
+  Laptop,
+  TrendingUp,
+  X,
+  Calendar
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { useTheme } from 'next-themes';
@@ -81,6 +84,32 @@ const SimsStats: React.FC = () => {
     };
   };
 
+  // Function to save stats to localStorage
+  const saveStatsToHistory = (newStats: StatData[]) => {
+    const timestamp = new Date().toISOString();
+    const snapshot = {
+      timestamp,
+      stats: newStats.map(stat => ({ label: stat.label, value: Math.round(stat.value) }))
+    };
+    
+    const history = getStatsHistory();
+    history.push(snapshot);
+    
+    // Keep only last 20 snapshots
+    const trimmedHistory = history.slice(-20);
+    localStorage.setItem('simsStatsHistory', JSON.stringify(trimmedHistory));
+  };
+
+  // Function to get stats history from localStorage
+  const getStatsHistory = () => {
+    try {
+      const stored = localStorage.getItem('simsStatsHistory');
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  };
+
   // Function to update URL with current stats
   const updateUrl = (newStats: StatData[]) => {
     const params = new URLSearchParams();
@@ -121,6 +150,7 @@ const SimsStats: React.FC = () => {
   const [currentTitle, setCurrentTitle] = useState('');
   const { theme, setTheme } = useTheme();
   const [isCapturing, setIsCapturing] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
 
   // Listen for browser back/forward navigation
   useEffect(() => {
@@ -159,6 +189,21 @@ const SimsStats: React.FC = () => {
     }
   };
 
+  // Function to get stat changes from last snapshot
+  const getStatChanges = () => {
+    const history = getStatsHistory();
+    if (history.length < 2) return null;
+    
+    const current = stats.map(stat => ({ label: stat.label, value: Math.round(stat.value) }));
+    const previous = history[history.length - 1].stats;
+    
+    return current.map(stat => {
+      const prevStat = previous.find(p => p.label === stat.label);
+      const change = prevStat ? stat.value - prevStat.value : 0;
+      return { ...stat, change };
+    });
+  };
+
   const topIcons = [
     { icon: Diamond, bg: "bg-sims-panel", tooltip: "Aspirations & Goals" },
     { icon: Users, bg: "bg-sims-panel", tooltip: "Social Relationships" },
@@ -182,7 +227,12 @@ const SimsStats: React.FC = () => {
       onClick: () => window.open('https://github.com/sirmews/sim-mood-snaps', '_blank'),
       tooltip: 'View on GitHub'
     },
-    { icon: User, bg: "bg-sims-panel-light", tooltip: "Sim Profile" },
+    { 
+      icon: TrendingUp, 
+      bg: "bg-sims-panel-light", 
+      onClick: () => setShowHistory(!showHistory),
+      tooltip: "View Stats History" 
+    },
   ];
 
   // Update title when stats change
@@ -212,6 +262,7 @@ const SimsStats: React.FC = () => {
     );
     setStats(newStats);
     updateUrl(newStats);
+    saveStatsToHistory(newStats);
   };
 
   return (
@@ -261,6 +312,87 @@ const SimsStats: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Stats History Overlay */}
+        {showHistory && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-gradient-to-b from-sims-panel-light to-sims-panel rounded-2xl p-6 border-4 border-sims-chrome-dark max-w-md w-full max-h-96 overflow-y-auto">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-bold text-sims-text">Stats History</h3>
+                <button 
+                  onClick={() => setShowHistory(false)}
+                  className="bg-sims-panel-light rounded-lg p-1 border-2 border-sims-chrome-dark hover:brightness-110"
+                >
+                  <X className="w-4 h-4 text-sims-text" />
+                </button>
+              </div>
+
+              {/* Current vs Last Changes */}
+              {(() => {
+                const changes = getStatChanges();
+                if (!changes) {
+                  return (
+                    <div className="text-center text-sims-text/70 py-4">
+                      <Calendar className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                      <p>No previous data to compare</p>
+                      <p className="text-sm">Adjust your stats to start tracking!</p>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-semibold text-sims-text/80 mb-2">Changes Since Last Update:</h4>
+                    {changes.map((stat) => (
+                      <div key={stat.label} className="bg-sims-panel rounded-lg p-3 border border-sims-chrome-dark">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sims-text font-medium">{stat.label}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sims-text">{stat.value}</span>
+                            {stat.change !== 0 && (
+                              <span className={`text-sm font-bold ${
+                                stat.change > 0 ? 'text-green-400' : 'text-red-400'
+                              }`}>
+                                {stat.change > 0 ? '+' : ''}{stat.change}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
+
+              {/* Recent History */}
+              {(() => {
+                const history = getStatsHistory();
+                if (history.length > 0) {
+                  return (
+                    <div className="mt-6 pt-4 border-t border-sims-chrome-dark">
+                      <h4 className="text-sm font-semibold text-sims-text/80 mb-2">Recent Activity:</h4>
+                      <div className="space-y-2 max-h-32 overflow-y-auto">
+                        {history.slice(-5).reverse().map((snapshot, index) => (
+                          <div key={index} className="text-xs text-sims-text/60 bg-sims-panel/30 rounded p-2">
+                            <div className="mb-1">
+                              {new Date(snapshot.timestamp).toLocaleString()}
+                            </div>
+                            <div className="grid grid-cols-2 gap-1 text-xs">
+                              {snapshot.stats.map((stat) => (
+                                <span key={stat.label}>{stat.label}: {stat.value}</span>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              })()}
+            </div>
+          </div>
+        )}
 
       </div>
       <p className="p-4 sm:p-6 text-center text-sims-text/70 text-sm">
