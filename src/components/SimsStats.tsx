@@ -313,14 +313,8 @@ const SimsStats: React.FC = () => {
               </div>
             ) : (
               <div className="space-y-4">
-                <div className="flex justify-between items-center">
+                <div className="mb-4">
                   <h3 className="text-lg font-bold text-sims-text">Stats History</h3>
-                  <button 
-                    onClick={() => setShowHistory(false)}
-                    className="bg-sims-panel-light rounded-lg p-1 border-2 border-sims-chrome-dark hover:brightness-110"
-                  >
-                    <X className="w-4 h-4 text-sims-text" />
-                  </button>
                 </div>
 
                 {/* Current vs Last Changes */}
