@@ -84,15 +84,27 @@ const SimsStats: React.FC = () => {
     };
   };
 
-  // Function to save stats to localStorage
+  // Function to save stats to localStorage (only if more than 1 hour since last save)
   const saveStatsToHistory = (newStats: StatData[]) => {
-    const timestamp = new Date().toISOString();
+    const history = getStatsHistory();
+    const now = new Date();
+    
+    // Check if we should save (more than 1 hour since last save, or no previous saves)
+    if (history.length > 0) {
+      const lastSave = new Date(history[history.length - 1].timestamp);
+      const hoursSinceLastSave = (now.getTime() - lastSave.getTime()) / (1000 * 60 * 60);
+      
+      // Don't save if less than 1 hour has passed
+      if (hoursSinceLastSave < 1) {
+        return;
+      }
+    }
+    
     const snapshot = {
-      timestamp,
+      timestamp: now.toISOString(),
       stats: newStats.map(stat => ({ label: stat.label, value: Math.round(stat.value) }))
     };
     
-    const history = getStatsHistory();
     history.push(snapshot);
     
     // Keep only last 20 snapshots
